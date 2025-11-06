@@ -1,0 +1,87 @@
+# 2025-11-07
+- 学びメモ：〜〜〜　if 0 <= num < len(books): 〜〜〜〜   のnumの次の < はなんで　= をつけないかとゆうと、リストのインデックスは０から始まるからもし　=　をつけたら
+                                                      一個多く許可をしてしまう。
+ 
+ 
+ 「今日書いたコード」
+
+ # 図書館アプリ簡易版
+# 機能：本の一覧表示、追加、貸出、返却（保存なし）
+
+books = [
+    {'title': '吾輩は猫である', 'author': '夏目漱石', 'is_borrowed': False},
+    {'title': '走れメロス', 'author': '太宰治', 'is_borrowed': False}
+]
+
+# 本の一覧を表示
+def show_books():
+    print("\n現在の本一覧：")
+    for i, book in enumerate(books, 1):  # enumerateで番号付きで回す
+        if book['is_borrowed']:
+            status = '貸出中'
+        else:
+            status = '在庫あり'
+        print(f"{i}. {book['title']}（{book['author']}） - {status}")
+
+# 本を追加
+def add_book():
+    title = input('追加する本のタイトル：')
+    author = input('作者：')
+    books.append({'title': title, 'author': author, 'is_borrowed': False})
+    print(f"『{title}』を追加しました。")
+
+# 本を借りる
+def borrow_book():
+    show_books()
+    num = int(input('借りたい本の番号を入力：')) - 1
+
+    if 0 <= num < len(books):
+        if not books[num]['is_borrowed']:
+            books[num]['is_borrowed'] = True
+            print(f"『{books[num]['title']}』を借りました。")
+        else:
+            print('その本は貸出中です。')
+    else:
+        print('無効な番号です。')
+
+# 本を返す
+def return_book():
+    show_books()
+    num = int(input('返す本の番号を入力：')) - 1
+
+    if 0 <= num < len(books):
+        if books[num]['is_borrowed']:
+            books[num]['is_borrowed'] = False
+            print(f"『{books[num]['title']}』を返却しました。")
+        else:
+            print('その本は貸出中ではありません。')
+    else:
+        print('無効な番号です。')
+
+# メインメニュー
+def main():
+    while True:
+        print("\n=== 図書館メニュー ===")
+        print("1. 本を表示")
+        print("2. 本を追加")
+        print("3. 本を借りる")
+        print("4. 本を返す")
+        print("5. 終了")
+
+        choice = input("番号を選んでください: ")
+
+        if choice == '1':
+            show_books()
+        elif choice == '2':
+            add_book()
+        elif choice == '3':
+            borrow_book()
+        elif choice == '4':
+            return_book()
+        elif choice == '5':
+            print("図書館システムを終了します。")
+            break
+        else:
+            print("無効な入力です。もう一度入力してください。")
+
+main()
