@@ -1,0 +1,17 @@
+# 今日やったことーjsonを覚えるためにサプーの動画を見て小レベルのjsonをやった。
+  学びメモー itemsの引数の辞書のところに外側を""で囲むのはjsonにまず文字列として渡すから
+
+
+ーーコードーー
+from pathlib import Path
+import json
+
+path = Path("products.json")
+
+text = path.read_text(encoding="utf-8")
+print("[DEBUG] 読み込んだ文字列: ")
+print(text)
+
+data = json.loads(text)
+
+
